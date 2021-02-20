@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import firebase from 'firebase-admin';
-import { db } from './admin';
+import { db } from '../config/admin.config';
 
 const usersRoute = Router()
 

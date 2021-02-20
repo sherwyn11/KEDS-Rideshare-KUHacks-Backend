@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import firebase from 'firebase-admin';
-import { db } from './admin';
+import { db } from '../config/admin.config';
 
 const driversRoute = Router()
 
-driversRoute.get('/get/:eth_address', async function (req, res) {
-    let eth_address = req.params.eth_address;
-    let result = await db.collection("root").doc("drivers").get(eth_address);
-    let geocode = result.get(eth_address);
-    res.json({ geopoint: geocode });
+driversRoute.get('/get', async function (req, res) {
+    
+    db.collection("drivers").get().then((data) => {
+        data.forEach(d=>{console.log(d.data())})
+    });
 });
 
 driversRoute.put('/update/:eth_address', async function (req, res) {

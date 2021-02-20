@@ -13,7 +13,7 @@ const initContract = async () => {
         web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
     }
 
-    const LMS = contract(RideManager, '0x49dae11aEc6AD035a6c312Be4Ae35Af71f04a928');
+    const LMS = contract(RideManager, '0x1ac5fef0f38bB13081A3091476Fc407c42Fc4CA5');
     LMS.setProvider(web3.currentProvider);
 
     accounts = await web3.eth.getAccounts();

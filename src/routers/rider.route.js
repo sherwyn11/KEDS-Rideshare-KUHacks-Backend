@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { riderRegisterController } from '../controllers/rider.controller';
+import { requestRide } from '../controllers/rider.controller';
 
 const riderRouter = Router()
 
-riderRouter.route('/register').post(riderRegisterController);
+riderRouter.route('/request-ride').post(requestRide);
 
 export default riderRouter;

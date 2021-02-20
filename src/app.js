@@ -14,7 +14,7 @@ app.use(morgan('combined', { stream: accessLogStream }));
 app.use(cors());
 app.use(urlencoded({ extended: false }));
 app.use(json());
-app.use('/api/', routers);
+app.use('/api', routers);
 app.use('/db', dbRouter);
 
 export default app;
