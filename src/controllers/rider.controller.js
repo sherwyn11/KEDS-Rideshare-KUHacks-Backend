@@ -1,5 +1,4 @@
 import { getLMSandAccount } from '../config/contracts.config';
-import firebase from 'firebase-admin';
 import { db } from '../config/admin.config';
 import { isPointWithinRadius } from 'geolib';
 
@@ -19,11 +18,10 @@ const getDriverInfo = (lms, acc, mainAct) => {
     return new Promise(async function (resolve, reject) {
         lms.getDriverInfo(acc, { from: mainAct })
             .then(async (info) => {
-                // console.log(info);
                 resolve(info);
             })
             .catch(err => {
-                res.status(500).send({ "status": "Failed" });
+                console.log({ "status": "Failed" });
             });
     });
 }
@@ -39,7 +37,7 @@ const getAvailableDrivers = (lms, mainAct) => {
                 resolve(driverArrNew);
             })
             .catch(err => {
-                res.status(500).send({ "status": "Failed" });
+                console.log({ "status": "Failed" });
             });
     });
 }
@@ -67,16 +65,14 @@ const checkLoc = (drivers, user) => {
         let decision = isPointWithinRadius(
             { latitude: driver.geoLocation.latitude, longitude: driver.geoLocation.longitude },
             { latitude: user.latitude, longitude: user.longitude },
-            500
-        )
+            8000
+        );
         if (decision) temp.push(driver['ethAddress']);
     }
-    console.log(temp)
     return temp;
 }
 
 const checkIfDriverFree = (drivers, status) => {
-    console.log(status);
     let temp = status.filter((element) => {
         return element.status === '0' && drivers.includes(element['ethAddress'])
     });
@@ -87,7 +83,7 @@ const checkIfDriverFree = (drivers, status) => {
 
 const requestRide = async (req, res) => {
     let user = req.body.user;
-    let { accounts, lms } = getLMSandAccount();
+    let { lms } = getLMSandAccount();
 
     try {
         let driverData = await getAllDriversGeoPoints();
@@ -95,7 +91,7 @@ const requestRide = async (req, res) => {
         data = manipulate(data);
         let drivers = checkLoc(driverData, user);
         let selectedDrivers = checkIfDriverFree(drivers, data);
-        
+
         res.status(200).send({ selectedDrivers: selectedDrivers });
     } catch (e) {
         console.log(e);
