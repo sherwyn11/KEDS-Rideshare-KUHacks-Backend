@@ -1,6 +1,6 @@
 # KEDS-Rideshare-KUHacks-Backend
 
-View Frontend code <a href="https://github.com/sherwyn11/KEDS-Rideshare-KUHacks-Frontend/">here</a>.
+View Frontend repository <a href="https://github.com/sherwyn11/KEDS-Rideshare-KUHacks-Frontend/">here</a>.
 
 ## Getting Started
 
