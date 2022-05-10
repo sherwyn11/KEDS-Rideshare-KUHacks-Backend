@@ -1,23 +1,23 @@
 import Web3 from 'web3';
+import contract from 'truffle-contract';
 import RideManager from '../contracts/RideManager.json';
 
 let accounts;
-let contract;
+let lms;
 var web3;
 
 const initContract = async () => {
-    if (typeof web3 !== 'undefined') {
-        web3 = new Web3(web3.currentProvider);
-    } else {
-        web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
-    }
+    web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
 
-    contract = new web3.eth.Contract(RideManager.abi, '0x76105917F3a4B6D95676c7A2FD80c2EF19d7d879');
+    const LMS = contract(RideManager, '0xEd5BF8B846DAf73b9BAfD05901AC83c497da7191');
+    LMS.setProvider(web3.currentProvider);
+
+    accounts = await web3.eth.getAccounts();
+    lms = await LMS.deployed();
 }
 
-const getContractandAccount = () => {
-    return { accounts, contract };
+const getLMSandAccount = () => {
+    return { accounts, lms };
 }
 
-export { initContract, getContractandAccount };
-
+export { initContract, getLMSandAccount };
